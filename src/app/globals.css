@@ -121,7 +121,7 @@ body {
 }
 
 .animate-float {
-  animation: float var(--duration, 18s) linear var(--delay, 0s) infinite;
+  animation: float var(--duration, 18s) linear var(--delay, 0s) infinite backwards;
 }
 
 .animate-shimmer {

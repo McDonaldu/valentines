@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
 const HEART_CHARS = ["♥", "♡", "✦", "❦"];
 
@@ -27,13 +27,14 @@ function generateParticles(count: number): Particle[] {
 }
 
 export default function FloatingParticles() {
-  const [count, setCount] = useState(10);
+  const [particles, setParticles] = useState<Particle[]>([]);
 
   useEffect(() => {
-    setCount(window.innerWidth < 640 ? 8 : 16);
+    const count = window.innerWidth < 640 ? 8 : 16;
+    setParticles(generateParticles(count));
   }, []);
 
-  const particles = useMemo<Particle[]>(() => generateParticles(count), [count]);
+  if (particles.length === 0) return null;
 
   return (
     <div className="pointer-events-none fixed inset-0 z-0 overflow-hidden">
@@ -43,6 +44,7 @@ export default function FloatingParticles() {
           className="animate-float absolute text-gold"
           style={{
             left: p.left,
+            top: 0,
             fontSize: p.size,
             ["--duration" as string]: p.duration,
             ["--delay" as string]: p.delay,
